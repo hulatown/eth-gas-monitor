@@ -1,11 +1,11 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Eth Gas Monitor
+# Ethereum Gas Monitor
 
-My Chrome Extension
+Ethereum Realtime Gas Price and Burner Chrome Extension
 
 ## Features
-
-- Feature 1
-- Feature 2
+Showing Ethereum realtime gas information based on [ultrasound.money](https://ultrasound.money/)
+- Showing Realtime Gas Price (GWei)
+- Showing which contract burns most ETH in the last 5 minutes and its link to [etherscan](https://etherscan.io)
 
 ## Install
 
@@ -15,7 +15,9 @@ My Chrome Extension
 
 Suggestions and pull requests are welcomed!.
 
----
+## Thanks
+
+Thank you, [Gas Now](https://www.gasnow.org/)!
 
 This project was bootstrapped with [Chrome Extension CLI](https://github.com/dutiyesh/chrome-extension-cli)
 

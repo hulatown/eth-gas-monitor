@@ -2,111 +2,31 @@
 
 import './popup.css';
 
-(function() {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
+chrome.storage.sync.get("last_update_time", ({ last_update_time }) => {
+  document.getElementById("last_update_time").innerText = last_update_time?last_update_time:"no data";
+});
 
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
-    get: cb => {
-      chrome.storage.sync.get(['count'], result => {
-        cb(result.count);
-      });
-    },
-    set: (value, cb) => {
-      chrome.storage.sync.set(
-        {
-          count: value,
-        },
-        () => {
-          cb();
-        }
-      );
-    },
-  };
+chrome.storage.sync.get("gas_price", ({ gas_price }) => {
+  document.getElementById("gas_price").innerText = gas_price?gas_price:"no data";
+});
 
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter').innerHTML = initialValue;
+chrome.storage.sync.get("gas_burner", ({ gas_burner }) => {
+  document.getElementById("gas_burner").innerText = gas_burner?gas_burner:"no data";
+});
 
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
-    });
+chrome.storage.sync.get("gas_burner_contract", ({ gas_burner_contract }) => {
+  document.getElementById("gas_burner").href = gas_burner_contract?gas_burner_contract:"#";
+});
 
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
+chrome.storage.onChanged.addListener(function (changes, area) {
+  if (changes["last_update_time"] && changes["last_update_time"].newValue){
+    document.getElementById("last_update_time").innerText = changes["last_update_time"].newValue;
   }
-
-  function updateCounter({ type }) {
-    counterStorage.get(count => {
-      let newCount;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            response => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
+  if (changes["gas_price"] && changes["gas_price"].newValue){
+    document.getElementById("gas_price").innerText = changes["gas_price"].newValue;
   }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get(count => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
+  if (changes["gas_burner"] && changes["gas_burner"].newValue && changes["gas_burner_contract"] && changes["gas_burner_contract"].newValue ){
+    document.getElementById("gas_burner").innerText = changes["gas_burner"].newValue;
+    document.getElementById("gas_burner").href = changes["gas_burner_contract"].newValue;
   }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    response => {
-      console.log(response.message);
-    }
-  );
-})();
+});

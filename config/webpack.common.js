@@ -3,6 +3,7 @@
 const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const PATHS = require('./paths');
 
@@ -62,6 +63,12 @@ const common = {
       filename: '[name].css',
     }),
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new UglifyJSPlugin()
+    ]
+  }
 };
 
 module.exports = common;

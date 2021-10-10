@@ -2,22 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Chrome Extension</title>
+    <title>ETH Gas Monitor</title>
     <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <div class="app">
-    <p class="counter-label">Counter</p>
-    <div id="counter" class="counter"></div>
-    <div class="button-container">
-      <button id="decrementBtn" class="button">-</button>
-      <button id="incrementBtn" class="button">+</button>
+  <div class="container">
+    <div class="info">
+      <div class="gas-data">
+        <div class="title">Gas Price(GWei):</div>
+        <div id="gas_price" class="value"></div>
+      </div>
+      <div class="gas-data">
+        <div class="title">ETH Burner(last 5min):</div>
+        <div><a id="gas_burner" class="text" target="_blank" href="#"></a></div>
+      </div>
     </div>
-
-    <hr class="divider" />
-
-    <p class="title">Chrome Extension is Ready!</p>
-    <p class="subtitle">Start by updating <code>popup.html</code></p>
+    <div class="update-time">
+      <div>Last update:</div>
+      <div id="last_update_time" class="text"></div>
+    </div>
   </div>
 
   <script src="popup.js"></script>
