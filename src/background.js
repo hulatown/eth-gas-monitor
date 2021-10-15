@@ -37,4 +37,7 @@ const get_gas_data = async () => {
 
 get_gas_data().then(function(){
   setInterval(get_gas_data, fetch_intervals);
+})
+.catch(e => {
+  console.log('Failed to fetch! Error message: '+e.message);
 });
