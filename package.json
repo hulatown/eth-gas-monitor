@@ -1,7 +1,7 @@
 {
   "name": "eth-gas-monitor",
   "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "description": "Ethereum real-time gas price and gas burner (data from ultrasound.money)",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",

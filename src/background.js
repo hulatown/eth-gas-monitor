@@ -1,5 +1,3 @@
-'use strict';
-
 // With background scripts you can communicate with popup
 // and contentScript files.
 // For more information on background script,
@@ -7,7 +5,7 @@
 
 const gas_uri = "https://api.ultrasound.money/fees/all";
 const ethereum_explorer = "https://etherscan.io/address/";
-let fetch_intervals = 15000;
+let fetch_intervals = 15; 
 let last_update_time, gas_price, gas_burner, gas_burner_url, gas_burner_name;
 
 const get_gas_data = async () => {
@@ -35,9 +33,16 @@ const get_gas_data = async () => {
   return response_json;
 }
 
-get_gas_data().then(function(){
-  setInterval(get_gas_data, fetch_intervals);
-})
-.catch(e => {
-  console.log('Failed to fetch! Error message: '+e.message);
+
+chrome.alarms.create({
+  periodInMinutes: fetch_intervals/60,
+  delayInMinutes: 0
+});
+
+chrome.alarms.onAlarm.addListener(() => {
+  try{
+    get_gas_data();
+  }catch(e){
+    console.log('Failed to fetch! Error message: '+e.message);
+  }
 });
