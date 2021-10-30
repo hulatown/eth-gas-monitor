@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "description": "Ethereum real-time gas price and gas burner (data from ultrasound.money)",
   "icons": {
-    "16": "./icons/eth-logo.png",
-    "32": "./icons/eth-logo.png",
-    "48": "./icons/eth-logo.png",
-    "128": "./icons/eth-logo.png"
+    "16":  "./icons/eth-gas-monitor-16x16.png",
+    "32":  "./icons/eth-gas-monitor-32x32.png",
+    "48":  "./icons/eth-gas-monitor-48x48.png",
+    "128": "./icons/eth-gas-monitor-128x128.png"
   },
   "background": {
     "service_worker": "background.js"
